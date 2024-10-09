@@ -68,7 +68,8 @@ export const generateCarImageUrl = (car: CarProps, angle?: string) => {
   const url = new URL("https://cdn.imagin.studio/getimage");
   const { make, model, year } = car;
 
-  url.searchParams.append('customer', process.env.NEXT_PUBLIC_IMAGIN_API_KEY || '');
+  url.searchParams.append('customer', "hrjavascript-mastery");
+  // url.searchParams.append('customer', process.env.NEXT_PUBLIC_IMAGIN_API_KEY || '');
   url.searchParams.append('make', make);
   url.searchParams.append('modelFamily', model.split(" ")[0]);
   url.searchParams.append('zoomType', 'fullscreen');
@@ -78,3 +79,30 @@ export const generateCarImageUrl = (car: CarProps, angle?: string) => {
 
   return `${url}`;
 } 
+
+
+
+
+// export const generateCarImageUrl = async (car: CarProps, angle?: string) => {
+//   const { make, model, year } = car;
+//   const query = `${make} ${model} ${year} car`; // Construct the search query for Unsplash
+
+//   const API_KEY = "Br2ChaKiOEQ1rVXFe4cHecKOGUIbg6DqJWU9TGxwXvY"; // Replace with your actual Unsplash API key
+
+//   // Make the request to Unsplash API
+//   const response = await fetch(
+//     `https://api.unsplash.com/search/photos?query=${encodeURIComponent(query)}&per_page=1&client_id=${API_KEY}`
+//   );
+
+//   // Parse the response
+//   const data = await response.json();
+
+//   if (data.results.length > 0) {
+//     return data.results[0].urls.regular; // Return the image URL from the first result
+//   } else {
+//     // Fallback in case no image is found
+//     return "https://via.placeholder.com/600x400?text=No+Image+Available";
+//   }
+// };
+
+

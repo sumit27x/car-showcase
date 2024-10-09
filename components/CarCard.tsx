@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-
+import { useEffect } from "react";
 import { calculateCarRent, generateCarImageUrl } from "@utils";
 import { CarProps } from "@types";
 import CustomButton from "./CustomButton";
@@ -14,10 +14,23 @@ interface CarCardProps {
 
 const CarCard = ({ car }: CarCardProps) => {
   const { city_mpg, year, make, model, transmission, drive } = car;
-
   const [isOpen, setIsOpen] = useState(false);
-
   const carRent = calculateCarRent(city_mpg, year);
+
+
+  const [carImageUrl, setCarImageUrl] = useState("");
+  useEffect(() => {
+    const fetchCarImage = async () => {
+      try {
+        const imageUrl = await generateCarImageUrl(car);
+        setCarImageUrl(imageUrl);
+      } catch (error) {
+        console.error("Error fetching car image:", error);
+      }
+    };
+  
+    fetchCarImage();
+  }, [car]);
 
   return (
     <div className="car-card group">
@@ -34,7 +47,11 @@ const CarCard = ({ car }: CarCardProps) => {
       </p>
 
       <div className='relative w-full h-40 my-3 object-contain'>
-        <Image src={generateCarImageUrl(car)} alt='car model' fill priority className='object-contain' />
+        <Image
+        // src={carImageUrl || "/hero.png"}
+        src="/hero.png"
+        //  src={generateCarImageUrl(car)}
+         alt='car model' fill priority className='object-contain' />
       </div>
 
       <div className='relative flex w-full mt-2'>
